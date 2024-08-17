@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("project")
+@RequestMapping("")
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
@@ -20,7 +20,7 @@ public class ProjectController {
         return projectService.findAll();
 
     }
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
 
         return projectService.save(project);
@@ -30,11 +30,12 @@ public class ProjectController {
         return projectService.findById(id);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity excluirProject (@PathVariable Long id){
-        return this.projectService.deleteById(id);
+    public ResponseEntity<Project> excluirProject (@PathVariable Long id){
+
+        return projectService.deleteById(id);
     }
-    @PatchMapping("{id}")
-    public Project updateProject(@PathVariable Long id, @RequestBody Project project) {
+    @PutMapping("{id}")
+    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project project) {
         return projectService.updateProject(id, project);
     }
 }
