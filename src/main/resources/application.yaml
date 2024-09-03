@@ -19,7 +19,14 @@ spring:
     defer-datasource-initialization: true
   application:
     name: projeto-service
-
+  rabbitmq:
+    listener:
+      simple:
+        retry:
+          max-attempts: 3
+          initial-interval: 5000
+          multiplier: 2.0
+          enabled: true
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

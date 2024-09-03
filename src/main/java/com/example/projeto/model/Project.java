@@ -16,6 +16,8 @@ public class Project {
     private Long id;
     private String name;
     private BigDecimal budget;
+    @Enumerated(EnumType.STRING)
+    private Proceeding proceeding;
     private String category;
     private String description;
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -60,6 +62,14 @@ public class Project {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Proceeding getProceeding() {
+        return proceeding;
+    }
+
+    public void setProceeding(Proceeding proceeding) {
+        this.proceeding = proceeding;
     }
 }
 

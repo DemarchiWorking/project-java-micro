@@ -1,5 +1,6 @@
 package com.example.projeto.controller;
 
+import com.example.projeto.model.Proceeding;
 import com.example.projeto.model.Project;
 import com.example.projeto.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class ProjectController {
     }
     @PostMapping("/")
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
-
+        project.setProceeding(Proceeding.NAO_INICIADO);
         return projectService.save(project);
     }
     @GetMapping("{id}")
