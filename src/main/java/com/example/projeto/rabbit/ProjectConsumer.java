@@ -22,9 +22,7 @@ public class ProjectConsumer {
     public void receive(@Payload String json) {
         try{
             Project project = objectMapper.readValue(json, Project.class);
-            log.info("project received", project);
-            log.info(project.getName());
-            log.info(project.getDescription());
+            log.info("project received:{}", json);
             project.setProceeding(Proceeding.NAO_INICIADO);
             projectService.save(project);
         }catch (JsonProcessingException e){
@@ -39,6 +37,7 @@ public class ProjectConsumer {
         try{
             //Long id = Long.parseLong(json);
             Project project = objectMapper.readValue(json, Project.class);
+            log.info("andamento received:{}", project.getId().toString() + "->" + project.getProceeding().toString());
             return projectService.updateAndamento(project.getId(),project);
         }catch (Exception e){
             log.error(e.getMessage());

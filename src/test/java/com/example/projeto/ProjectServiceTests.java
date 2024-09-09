@@ -2,6 +2,7 @@ package com.example.projeto;
 
 import com.example.projeto.model.Project;
 import com.example.projeto.service.ProjectService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ProjectServiceTests {
 
     @Test
     @DisplayName("Deve adicionar um novo projeto")
-    public void testaInsert(){
+    public void testaInsert() throws JsonProcessingException {
         Project p = new Project();
         p.setName("E-comerce Esportivo");
         p.setBudget(BigDecimal.valueOf(7000.00));
@@ -54,7 +55,7 @@ public class ProjectServiceTests {
 
     @Test
     @DisplayName("Testa o update ")
-    public void testaUpdate() {
+    public void testaUpdate() throws JsonProcessingException {
         Project projectBefore = projectService.findById(111L).getBody();
         assertEquals(projectBefore.getName(), "Site Oficina");
         projectBefore.setName("Oficina Carros");
