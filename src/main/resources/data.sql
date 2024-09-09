@@ -1,2 +1,0 @@
-INSERT INTO TB_PROJECT (id, name,category,budget,description,proceeding) values ('111','Site Oficina','Desenvolvimento',8000,'Site para Oficina Mecanica','ANDAMENTO');
-INSERT INTO TB_PROJECT (id, name,category,budget,description,proceeding) values ('102','Loja Virtual','Desenvolvimento',12000,'Loja Virtual para roupas','NAO_INICIADO');

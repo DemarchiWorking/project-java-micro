@@ -30,6 +30,7 @@ public class ProjectService {
 
         Project saved_project = projectRepository.save(project); //projectRepository.save(project);
         newprojProducer.send(saved_project);
+        log.info("projeto criado:{}", saved_project.getId().toString());
         return ResponseEntity.ok(saved_project);
     }
 
@@ -45,6 +46,7 @@ public class ProjectService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 Bad Request
         }else{
             projectRepository.deleteById(id);
+            log.info("projeto apagado:{}", id.toString());
             return ResponseEntity.ok(project);
         }
     }
@@ -62,6 +64,7 @@ public class ProjectService {
             project.setName(newProject.getName());
             project.setBudget(newProject.getBudget());
             project.setDescription(newProject.getDescription());
+            log.info("projeto atualizado:{}", id);
             return ResponseEntity.ok(projectRepository.save(project));
 
         }).orElseGet(() -> {
@@ -73,6 +76,7 @@ public class ProjectService {
     public ResponseEntity<Project> updateAndamento(Long id, Project project_up) {
         return projectRepository.findById(id).map(project ->{
             project.setProceeding(project_up.getProceeding());
+            log.info("andamento de projeto atualizado:{}", id.toString() + "->" + project_up.getProceeding().toString() );
             return ResponseEntity.ok(projectRepository.save(project));
         }).orElseGet( () -> ResponseEntity.notFound().build());
     }
