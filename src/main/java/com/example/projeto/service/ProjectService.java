@@ -1,7 +1,9 @@
 package com.example.projeto.service;
 
 import com.example.projeto.model.Project;
+import com.example.projeto.rabbit.NewprojProducer;
 import com.example.projeto.repository.ProjectRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,16 @@ public class ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
+    @Autowired
+    private NewprojProducer newprojProducer;
 
     public void processar(Project project){
 
     }
-    public ResponseEntity<Project> save(Project project) {
+    public ResponseEntity<Project> save(Project project) throws JsonProcessingException {
 
         Project saved_project = projectRepository.save(project); //projectRepository.save(project);
+        newprojProducer.send(saved_project);
         return ResponseEntity.ok(saved_project);
     }
 
@@ -33,7 +38,7 @@ public class ProjectService {
         return ResponseEntity.ok(projectRepository.findAll());
     }
 
-    public ResponseEntity<Project> deleteById(@PathVariable Long id) {
+    public ResponseEntity<Project> deleteById(Long id) {
         Project project = projectRepository.findById(id).orElse(null);
 
         if (project == null) {
@@ -43,7 +48,7 @@ public class ProjectService {
             return ResponseEntity.ok(project);
         }
     }
-    public ResponseEntity<Project> findById(@PathVariable Long id) {
+    public ResponseEntity<Project> findById(Long id) {
         Project project = projectRepository.findById(id).orElse(null);
 
         if (project == null) {
@@ -63,6 +68,13 @@ public class ProjectService {
             newProject.setId(id);
             return ResponseEntity.ok(projectRepository.save(newProject));
         });
+    }
+
+    public ResponseEntity<Project> updateAndamento(Long id, Project project_up) {
+        return projectRepository.findById(id).map(project ->{
+            project.setProceeding(project_up.getProceeding());
+            return ResponseEntity.ok(projectRepository.save(project));
+        }).orElseGet( () -> ResponseEntity.notFound().build());
     }
 
 
