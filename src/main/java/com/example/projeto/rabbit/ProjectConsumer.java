@@ -1,5 +1,6 @@
 package com.example.projeto.rabbit;
 
+import com.example.projeto.model.Proceeding;
 import com.example.projeto.model.Project;
 import com.example.projeto.service.ProjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +25,7 @@ public class ProjectConsumer {
             log.info("project received", project);
             log.info(project.getName());
             log.info(project.getDescription());
-
+            project.setProceeding(Proceeding.NAO_INICIADO);
             projectService.save(project);
         }catch (JsonProcessingException e){
             log.error(e.getMessage());
@@ -38,9 +39,7 @@ public class ProjectConsumer {
         try{
             //Long id = Long.parseLong(json);
             Project project = objectMapper.readValue(json, Project.class);
-            System.out.println(project.getProceeding());
-            System.out.println(project.getName());
-            return projectService.updateProject(project.getId(),project);
+            return projectService.updateAndamento(project.getId(),project);
         }catch (Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e);
