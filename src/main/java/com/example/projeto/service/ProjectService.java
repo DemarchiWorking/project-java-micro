@@ -27,7 +27,7 @@ public class ProjectService {
 
     }
     public ResponseEntity<Project> save(Project project) throws JsonProcessingException {
-
+        project.setId(project.getId());
         Project saved_project = projectRepository.save(project); //projectRepository.save(project);
         newprojProducer.send(saved_project);
         log.info("projeto criado:{}", saved_project.getId().toString());

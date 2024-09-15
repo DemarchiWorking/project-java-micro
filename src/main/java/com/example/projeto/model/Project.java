@@ -12,7 +12,6 @@ import java.util.Set;
 @Table(name = "TB_PROJECT")
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private BigDecimal budget;
